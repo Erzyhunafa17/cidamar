@@ -6,12 +6,12 @@ export const prestasiController = {
   // Publik
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {
-      const page = parseInt(req.query.page as string) || 1;
-      const limit = parseInt(req.query.limit as string) || 10;
-      const search = req.query.q as string;
-      const kategori = req.query.kategori as string;
-      const tingkat = req.query.tingkat as string;
-      const tahun = req.query.tahun ? parseInt(req.query.tahun as string) : undefined;
+      const page = parseInt((req.query.page as string) as string) || 1;
+      const limit = parseInt((req.query.limit as string) as string) || 10;
+      const search = (req.query.q as string) as string;
+      const kategori = (req.query.kategori as string) as string;
+      const tingkat = (req.query.tingkat as string) as string;
+      const tahun = (req.query.tahun as string) ? parseInt((req.query.tahun as string) as string) : undefined;
 
       const result = await prestasiService.getAll({ page, limit, search, kategori, tingkat, tahun });
       
@@ -26,7 +26,7 @@ export const prestasiController = {
 
   async getBySlug(req: Request, res: Response, next: NextFunction) {
     try {
-      const { slug } = req.params;
+      const slug = req.params.slug as string;
       const data = await prestasiService.getBySlug(slug);
 
       if (!data) {
@@ -47,7 +47,7 @@ export const prestasiController = {
 
   async getById(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id } = req.params;
+      const id = req.params.id as string;
       const data = await prestasiService.getById(id);
 
       if (!data) {
@@ -83,7 +83,7 @@ export const prestasiController = {
 
   async update(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id } = req.params;
+      const id = req.params.id as string;
       const validatedData = updatePrestasiSchema.parse(req.body);
 
       const data = await prestasiService.update(id, validatedData);
@@ -99,7 +99,7 @@ export const prestasiController = {
 
   async delete(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id } = req.params;
+      const id = req.params.id as string;
       await prestasiService.delete(id);
       
       res.json({

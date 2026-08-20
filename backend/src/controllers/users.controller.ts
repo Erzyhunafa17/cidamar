@@ -64,7 +64,7 @@ export const usersController = {
 
   async deleteAdmin(req: Request, res: Response) {
     try {
-      const { id } = req.params;
+      const id = req.params.id as string;
 
       // Jangan hapus diri sendiri
       if (req.user?.id === id) {
@@ -87,7 +87,7 @@ export const usersController = {
 
   async resetPassword(req: Request, res: Response) {
     try {
-      const { id } = req.params;
+      const id = req.params.id as string;
       const { newPassword } = req.body;
 
       if (!newPassword || newPassword.length < 6) {

@@ -24,7 +24,7 @@ export const galeriController = {
 
   async getById(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id } = req.params;
+      const id = req.params.id as string;
       const data = await galeriService.getById(id);
 
       if (!data) {
@@ -61,7 +61,7 @@ export const galeriController = {
 
   async update(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id } = req.params;
+      const id = req.params.id as string;
       const validatedData = updateGaleriSchema.parse(req.body);
       const data = await galeriService.update(id, validatedData);
       res.json({ success: true, data });
@@ -72,7 +72,7 @@ export const galeriController = {
 
   async delete(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id } = req.params;
+      const id = req.params.id as string;
       await galeriService.delete(id);
       res.json({ success: true, message: 'Foto berhasil dihapus' });
     } catch (error) {

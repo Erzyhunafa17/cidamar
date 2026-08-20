@@ -14,7 +14,7 @@ export const arsipController = {
 
   async getById(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id } = req.params;
+      const id = req.params.id as string;
       const data = await arsipService.getById(id);
 
       if (!data) {
@@ -48,7 +48,7 @@ export const arsipController = {
 
   async update(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id } = req.params;
+      const id = req.params.id as string;
       const validatedData = updateArsipSchema.parse(req.body);
       
       const dbData: any = {};
@@ -68,7 +68,7 @@ export const arsipController = {
 
   async delete(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id } = req.params;
+      const id = req.params.id as string;
       await arsipService.delete(id);
       res.json({ success: true, message: 'Arsip berhasil dihapus' });
     } catch (error) {

@@ -6,7 +6,7 @@ export const agustusanController = {
   // Publik
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {
-      const tahun_acara = req.query.tahun ? parseInt(req.query.tahun as string) : undefined;
+      const tahun_acara = (req.query.tahun as string) ? parseInt((req.query.tahun as string) as string) : undefined;
       const data = await agustusanService.getAll({ tahun_acara });
       
       res.json({
@@ -20,7 +20,7 @@ export const agustusanController = {
 
   async getById(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id } = req.params;
+      const id = req.params.id as string;
       const data = await agustusanService.getById(id);
 
       if (!data) {
@@ -56,7 +56,7 @@ export const agustusanController = {
 
   async update(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id } = req.params;
+      const id = req.params.id as string;
       const validatedData = updateAgustusanSchema.parse(req.body);
 
       const data = await agustusanService.update(id, validatedData);
@@ -72,7 +72,7 @@ export const agustusanController = {
 
   async updateStatus(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id } = req.params;
+      const id = req.params.id as string;
       const { status } = updateStatusAgustusanSchema.parse(req.body);
 
       const data = await agustusanService.updateStatus(id, status);
@@ -88,7 +88,7 @@ export const agustusanController = {
 
   async delete(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id } = req.params;
+      const id = req.params.id as string;
       await agustusanService.delete(id);
       
       res.json({
@@ -102,7 +102,7 @@ export const agustusanController = {
 
   async reorder(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id } = req.params;
+      const id = req.params.id as string;
       const { urutan_tampil } = req.body;
       
       if (!urutan_tampil || typeof urutan_tampil !== 'number') {
@@ -118,7 +118,7 @@ export const agustusanController = {
 
   async deleteSelesai(req: Request, res: Response, next: NextFunction) {
     try {
-      const tahun = req.query.tahun ? parseInt(req.query.tahun as string) : undefined;
+      const tahun = (req.query.tahun as string) ? parseInt((req.query.tahun as string) as string) : undefined;
       await agustusanService.deleteSelesai(tahun);
       
       res.json({

@@ -6,10 +6,10 @@ export const beritaController = {
   // Publik
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {
-      const page = parseInt(req.query.page as string) || 1;
-      const limit = parseInt(req.query.limit as string) || 10;
-      const search = req.query.q as string;
-      const kategori = req.query.kategori as string;
+      const page = parseInt((req.query.page as string) as string) || 1;
+      const limit = parseInt((req.query.limit as string) as string) || 10;
+      const search = (req.query.q as string) as string;
+      const kategori = (req.query.kategori as string) as string;
 
       const result = await beritaService.getAll({ page, limit, search, kategori });
       
@@ -24,7 +24,7 @@ export const beritaController = {
 
   async getBySlug(req: Request, res: Response, next: NextFunction) {
     try {
-      const { slug } = req.params;
+      const slug = req.params.slug as string;
       const data = await beritaService.getBySlug(slug);
 
       if (!data) {
@@ -45,7 +45,7 @@ export const beritaController = {
 
   async getById(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id } = req.params;
+      const id = req.params.id as string;
       // We need to add getById in beritaService too!
       // But we can just use supabase directly here for simplicity, or add it to service.
       // Let's call a service method (I'll add it to service next)
@@ -90,7 +90,7 @@ export const beritaController = {
 
   async update(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id } = req.params;
+      const id = req.params.id as string;
       const validatedData = updateBeritaSchema.parse(req.body);
 
       const data = await beritaService.update(id, validatedData);
@@ -106,7 +106,7 @@ export const beritaController = {
 
   async delete(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id } = req.params;
+      const id = req.params.id as string;
       await beritaService.delete(id);
       
       res.json({
