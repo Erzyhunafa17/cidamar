@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils/cn';
 import { HTMLAttributes } from 'react';
 
-type BadgeVariant = 'green' | 'gold' | 'silver' | 'bronze' | 'red' | 'gray' | 'amber';
+type BadgeVariant = 'green' | 'gold' | 'silver' | 'bronze' | 'red' | 'gray' | 'amber' | 'blue' | 'white';
 
 interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   variant?: BadgeVariant;
@@ -16,6 +16,8 @@ const variantClasses: Record<BadgeVariant, string> = {
   red:    'bg-red-50     text-red-alert      border border-red-200',
   gray:   'bg-gray-100   text-gray-500       border border-gray-200',
   amber:  'bg-amber-light text-amber-700     border border-amber-200',
+  blue:   'bg-blue-50    text-blue-600       border border-blue-200',
+  white:  'bg-white      text-gray-800       border border-gray-200 shadow-sm',
 };
 
 const sizeClasses = {
