@@ -37,7 +37,7 @@ export default function AdminLayout({
 
   const handleLogout = () => {
     logout();
-    router.push('/admin/login');
+    window.location.href = '/admin/login';
   };
 
   if (!user) return <div className="min-h-screen flex items-center justify-center bg-gray-50">Memuat...</div>;
