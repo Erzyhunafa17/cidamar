@@ -274,7 +274,7 @@ export default function HeroSection() {
       </div>
 
       {/* ── Foreground Text Content ── */}
-      <div className="container-custom relative z-10 max-w-[1050px] flex flex-col items-center">
+      <div className="container-custom relative z-10 max-w-[1050px] flex flex-col items-center mb-32 md:mb-56">
         {/* Tag pill */}
         <div ref={tagRef} className="mb-8">
           <span className="bg-white border-[2.5px] border-charcoal px-6 py-2.5 rounded-[50px] text-[16px] font-medium text-charcoal">
