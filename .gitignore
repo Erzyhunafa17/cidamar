@@ -5,3 +5,11 @@ node_modules/
 .env.production
 .DS_Store
 *.log
+
+# AI Agents configurations
+.agents/
+AGENTS.md
+
+# Temp or debug scripts
+backend/fix-ts.js
+backend/fix-auth.js

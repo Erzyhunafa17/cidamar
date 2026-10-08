@@ -14,17 +14,17 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantClasses: Record<ButtonVariant, string> = {
-  primary:   'bg-green-secondary text-white hover:bg-green-primary active:scale-95 shadow-sm',
-  secondary: 'bg-amber-accent text-white hover:bg-amber-600 active:scale-95 shadow-sm',
-  outline:   'border-2 border-green-secondary text-green-secondary hover:bg-green-pale active:scale-95',
-  ghost:     'text-green-secondary hover:bg-green-pale active:scale-95',
-  danger:    'bg-red-alert text-white hover:bg-red-700 active:scale-95 shadow-sm',
+  primary:   'bg-charcoal text-cream hover:bg-slate active:scale-[0.98] transition-transform duration-300',
+  secondary: 'bg-earth-accent text-cream hover:bg-[#7a6b5e] active:scale-[0.98] transition-transform duration-300',
+  outline:   'border-[1.5px] border-charcoal text-charcoal hover:bg-charcoal hover:text-cream active:scale-[0.98] transition-all duration-300',
+  ghost:     'text-charcoal hover:bg-black/5 active:scale-[0.98] transition-all duration-300',
+  danger:    'bg-red-alert text-cream hover:bg-[#6c2d27] active:scale-[0.98] transition-transform duration-300',
 };
 
 const sizeClasses: Record<ButtonSize, string> = {
-  sm: 'h-9  px-4 text-sm',
-  md: 'h-11 px-5 text-base',
-  lg: 'h-14 px-8 text-lg',
+  sm: 'h-10 px-5 text-sm tracking-wide',
+  md: 'h-12 px-7 text-[0.95rem] tracking-wide',
+  lg: 'h-14 px-10 text-base tracking-wide',
 };
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
@@ -41,10 +41,9 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
     <button
       ref={ref}
       className={cn(
-        'inline-flex items-center justify-center gap-2 rounded-xl font-semibold',
-        'transition-all duration-200 ease-in-out',
-        'focus-visible:outline-2 focus-visible:outline-green-secondary focus-visible:outline-offset-2',
-        'disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none',
+        'inline-flex items-center justify-center gap-3 font-body font-medium rounded-sm',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-charcoal focus-visible:ring-offset-2',
+        'disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none',
         variantClasses[variant],
         sizeClasses[size],
         fullWidth && 'w-full',
@@ -59,7 +58,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
         </svg>
       )}
-      {children}
+      <span className="relative top-[1px]">{children}</span>
     </button>
   );
 });

@@ -2,14 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Clock, Flag, CalendarDays } from 'lucide-react';
-import Badge from '@/components/ui/Badge';
+import { ArrowRight } from 'lucide-react';
 import { API_BASE_URL } from '@/lib/utils/constants';
 
-const STATUS_CONFIG = {
-  selesai:       { label: 'Selesai',       variant: 'green' as const, icon: '✅' },
-  sedang_tampil: { label: 'Sedang Tampil', variant: 'red'   as const, icon: '🎤' },
-  menunggu:      { label: 'Menunggu',      variant: 'gray'  as const, icon: '⏳' },
+const STATUS_MAP = {
+  selesai:       { label: 'Selesai', color: 'text-charcoal/40' },
+  sedang_tampil: { label: 'Live Now', color: 'text-red-alert font-semibold' },
+  menunggu:      { label: 'Akan Datang', color: 'text-charcoal' },
 };
 
 export default function AgustusanSection() {
@@ -31,100 +30,86 @@ export default function AgustusanSection() {
         setLoading(false);
       }
     };
-
     fetchJadwal();
   }, []);
 
-  // Hanya tampilkan yang menunggu atau sedang tampil (bukan selesai)
-  const displayJadwal = jadwal
-    .filter((j: any) => j.status !== 'selesai')
-    .slice(0, 5);
-
+  const displayJadwal = jadwal.filter((j: any) => j.status !== 'selesai').slice(0, 4);
   const sedangTampil = jadwal.find((j: any) => j.status === 'sedang_tampil');
-  const adaJadwal = jadwal.filter((j: any) => j.status !== 'selesai').length > 0;
+  const adaJadwal = displayJadwal.length > 0;
 
   return (
     <section
       id="agustusan"
-      className="section-padding bg-gradient-to-br from-green-primary to-green-secondary"
-      aria-label="Jadwal Agustusan"
+      className="py-24 md:py-32 bg-slate text-cream"
+      aria-label="Jadwal Penampilan Agustusan"
     >
       <div className="container-custom">
-        {/* Header */}
-        <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 bg-amber-accent/20 border border-amber-accent/30 rounded-full px-4 py-2 text-amber-accent font-semibold text-sm mb-4">
-            <Flag className="w-4 h-4" />
-            HUT RI ke-81 — 17 Agustus 2026
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8">
+          
+          <div className="lg:col-span-5 flex flex-col justify-center">
+            <span className="block text-xs uppercase tracking-widest text-earth-accent font-semibold mb-6">
+              Jadwal & Agenda
+            </span>
+            <h2 className="text-4xl md:text-5xl font-heading font-medium leading-tight mb-8">
+              Perayaan<br />Agustusan
+            </h2>
+            <p className="text-cream/70 text-lg leading-relaxed font-light mb-12 max-w-md">
+              Momen di mana seluruh warga berkumpul, merayakan kemerdekaan dengan ragam lomba, kreasi seni, dan kebersamaan yang tulus.
+            </p>
+            
+            <Link
+              href="/agustusan"
+              className="group inline-flex items-center gap-3 text-cream font-medium hover:text-earth-accent transition-colors tracking-wide w-fit border-b border-cream/30 pb-1"
+            >
+              Lihat Agenda Lengkap
+              <ArrowRight className="w-4 h-4 opacity-70 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+            </Link>
           </div>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-3">
-            🎊 Jadwal Penampilan Agustusan
-          </h2>
-          <p className="text-green-light max-w-xl mx-auto">
-            Pantau jadwal dan status penampilan lomba secara langsung di sini.
-          </p>
-        </div>
 
-        {/* Sedang tampil banner */}
-        {sedangTampil && (
-          <div className="animate-pulse-ring mb-6 bg-red-alert/90 backdrop-blur-sm rounded-2xl p-4 flex items-center gap-4 text-white border-2 border-red-300">
-            <span className="text-3xl">🎤</span>
-            <div>
-              <div className="font-heading font-bold text-lg">{sedangTampil.nama_grup}</div>
-              <div className="text-red-100 text-sm">
-                Sedang tampil — {sedangTampil.jenis_penampilan} · Pukul {sedangTampil.waktu_tampil?.substring(0,5) || '-'}
+          <div className="lg:col-span-7 xl:col-span-6 xl:col-start-7">
+            {sedangTampil && (
+              <div className="mb-12 border-l-[3px] border-red-alert pl-6 py-2">
+                <span className="text-red-alert uppercase tracking-widest text-xs font-semibold mb-2 block animate-pulse">
+                  Live Now
+                </span>
+                <h3 className="text-2xl font-heading font-medium mb-1">{sedangTampil.nama_grup}</h3>
+                <p className="text-cream/60 font-light text-sm">
+                  {sedangTampil.jenis_penampilan} — {sedangTampil.waktu_tampil?.substring(0,5)}
+                </p>
               </div>
+            )}
+
+            <div className="flex flex-col border-t border-cream/10">
+              {loading ? (
+                <div className="py-8 text-cream/50 font-light italic">Memuat agenda...</div>
+              ) : !adaJadwal ? (
+                <div className="py-8 text-cream/50 font-light italic">Agenda telah selesai sepenuhnya.</div>
+              ) : (
+                displayJadwal.map((item: any) => {
+                  const status = STATUS_MAP[item.status as keyof typeof STATUS_MAP] || STATUS_MAP.menunggu;
+                  return (
+                    <div key={item.id} className="grid grid-cols-12 gap-4 py-8 border-b border-cream/10 items-center hover:bg-cream/[0.02] transition-colors -mx-4 px-4 rounded-sm">
+                      <div className="col-span-3 sm:col-span-2">
+                        <span className="text-lg font-heading text-cream/90">
+                          {item.waktu_tampil?.substring(0,5) || '--:--'}
+                        </span>
+                      </div>
+                      <div className="col-span-9 sm:col-span-7">
+                        <h4 className="text-lg font-medium text-cream mb-1">{item.nama_grup}</h4>
+                        <p className="text-sm text-cream/60 font-light">{item.jenis_penampilan}</p>
+                      </div>
+                      <div className="col-span-12 sm:col-span-3 sm:text-right mt-2 sm:mt-0">
+                        <span className={`text-xs uppercase tracking-widest ${status.color}`}>
+                          {status.label}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
             </div>
           </div>
-        )}
 
-        {/* Jadwal */}
-        <div className="space-y-3 mb-8">
-          {loading ? (
-            <div className="text-center text-white bg-white/10 p-6 rounded-2xl">Memuat jadwal...</div>
-          ) : !adaJadwal ? (
-            <div className="text-center text-white bg-white/10 p-6 rounded-2xl">Semua grup sudah selesai tampil. 🎉</div>
-          ) : (
-            displayJadwal.map((item: any) => {
-              const cfg = STATUS_CONFIG[item.status as keyof typeof STATUS_CONFIG] || STATUS_CONFIG.menunggu;
-              return (
-                <div
-                  key={item.id}
-                  className={`flex items-center gap-4 p-4 rounded-2xl transition-all ${
-                    item.status === 'sedang_tampil'
-                      ? 'bg-white/20 border-2 border-white/40 backdrop-blur-sm'
-                      : 'bg-white/10 border border-white/10'
-                  }`}
-                >
-                  <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white font-bold text-sm shrink-0">
-                    {item.urutan_tampil}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="font-semibold text-white truncate">{item.nama_grup}</div>
-                    <div className="text-green-light text-sm">{item.jenis_penampilan}</div>
-                  </div>
-                  <div className="flex items-center gap-1 text-green-light text-sm shrink-0">
-                    <Clock className="w-3.5 h-3.5" />
-                    {item.waktu_tampil?.substring(0,5) || '-'}
-                  </div>
-                  <Badge variant={cfg.variant} size="sm" className="shrink-0 hidden md:inline-flex">
-                    {cfg.icon} {cfg.label}
-                  </Badge>
-                </div>
-              );
-            })
-          )}
-        </div>
-
-        {/* CTA */}
-        <div className="text-center">
-          <Link
-            href="/agustusan"
-            className="inline-flex items-center gap-2 bg-white text-green-primary font-bold px-6 py-3 rounded-xl hover:bg-cream-bg transition-colors shadow-md"
-          >
-            <CalendarDays className="w-5 h-5" />
-            Lihat Jadwal Lengkap
-            <ArrowRight className="w-4 h-4" />
-          </Link>
         </div>
       </div>
     </section>

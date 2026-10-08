@@ -1,103 +1,87 @@
 import Link from 'next/link';
-import Image from 'next/image';
-import { ArrowRight, Calendar, User, Image as ImageIcon } from 'lucide-react';
-import Badge from '@/components/ui/Badge';
+import { ArrowRight } from 'lucide-react';
 import { fetchBeritaList } from '@/lib/api/berita';
-import { formatDate } from '@/lib/utils/format'; // Kita akan buat util ini
 
-const BADGE_VARIANT: Record<string, 'green' | 'amber' | 'gray' | 'red'> = {
-  kegiatan: 'green',
-  kesehatan: 'red',
-  pengumuman: 'amber',
-  umum: 'gray',
+const formatDateString = (dateStr: string) => {
+  if (!dateStr) return '';
+  const date = new Date(dateStr);
+  return new Intl.DateTimeFormat('id-ID', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric'
+  }).format(date);
 };
 
 export default async function BeritaSection() {
-  // Ambil 3 berita terbaru
   const { data: beritaList = [] } = await fetchBeritaList(1, 3).catch(() => ({ data: [] }));
 
   return (
     <section
       id="berita"
-      className="section-padding bg-cream-bg"
+      className="py-24 md:py-32 bg-cream text-charcoal border-b border-slate/10"
       aria-label="Berita Terkini Kampung Cidamar"
     >
       <div className="container-custom">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+        <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-16 md:mb-20 border-b border-slate/10 pb-8">
           <div>
-            <span className="inline-block text-amber-accent font-semibold text-sm uppercase tracking-widest mb-3">
-              Terkini dari Kampung
+            <span className="block text-xs uppercase tracking-widest text-earth-accent font-semibold mb-4">
+              Jurnal Kampung
             </span>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-green-primary">
-              Berita & Kegiatan
+            <h2 className="text-4xl md:text-5xl font-heading font-medium leading-tight text-charcoal">
+              Berita & Pembaruan
             </h2>
           </div>
           <Link
             href="/berita"
-            className="inline-flex items-center gap-2 text-green-secondary font-semibold hover:text-green-primary transition-colors shrink-0"
+            className="group flex items-center gap-2 text-charcoal font-medium hover:text-earth-accent transition-colors pb-1"
           >
-            Semua Berita
-            <ArrowRight className="w-4 h-4" />
+            Lihat semua arsip
+            <ArrowRight className="w-4 h-4 opacity-70 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
           </Link>
         </div>
 
-        {/* Cards */}
         {beritaList.length === 0 ? (
-          <div className="text-center py-10 bg-white rounded-2xl border border-gray-100">
-            <p className="text-brown-medium">Belum ada berita yang diterbitkan.</p>
-          </div>
+          <p className="text-charcoal/60 italic font-light">Belum ada berita yang diterbitkan saat ini.</p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-x-12 gap-y-16">
             {beritaList.map((berita) => (
               <Link
                 key={berita.id}
                 href={`/berita/${berita.slug}`}
-                className="group bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col"
+                className="group flex flex-col items-start"
               >
-                {/* Thumbnail area */}
-                <div className="relative bg-gradient-to-br from-green-pale to-green-light h-48 flex items-center justify-center text-gray-400 overflow-hidden">
+                <div className="w-full aspect-[4/3] bg-muted-green-light mb-6 overflow-hidden">
                   {berita.thumbnail_url ? (
-                    <Image
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
                       src={berita.thumbnail_url}
                       alt={berita.judul}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 33vw"
+                      className="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]"
                     />
                   ) : (
-                    <ImageIcon className="w-10 h-10 opacity-50" />
+                    <div className="w-full h-full flex items-center justify-center text-charcoal/20 bg-cream-alt">
+                      <span className="text-sm uppercase tracking-widest font-semibold">Cidamar</span>
+                    </div>
                   )}
                 </div>
 
-                {/* Content */}
-                <div className="p-5 flex flex-col flex-1">
-                  <div className="mb-3">
-                    <Badge variant={BADGE_VARIANT[berita.kategori] ?? 'gray'} size="sm">
-                      {berita.kategori.charAt(0).toUpperCase() + berita.kategori.slice(1)}
-                    </Badge>
-                  </div>
-
-                  <h3 className="font-heading font-bold text-green-primary text-base mb-2 group-hover:text-green-secondary transition-colors line-clamp-2">
-                    {berita.judul}
-                  </h3>
-
-                  <p className="text-brown-medium text-sm leading-relaxed line-clamp-3 flex-1 mb-4">
-                    {berita.isi}
-                  </p>
-
-                  {/* Meta */}
-                  <div className="flex items-center justify-between text-xs text-brown-medium border-t border-gray-100 pt-3">
-                    <span className="flex items-center gap-1">
-                      <User className="w-3 h-3" />
-                      {berita.penulis?.nama || 'Admin'}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Calendar className="w-3 h-3" />
-                      {formatDate(berita.tanggal_terbit)}
-                    </span>
-                  </div>
+                <div className="flex items-center gap-4 mb-3 w-full">
+                  <span className="text-xs font-semibold uppercase tracking-widest text-earth-accent">
+                    {berita.kategori}
+                  </span>
+                  <div className="h-px bg-slate/10 flex-1" />
+                  <time className="text-xs text-charcoal/60 uppercase tracking-wider">
+                    {formatDateString(berita.tanggal_terbit)}
+                  </time>
                 </div>
+
+                <h3 className="font-heading text-2xl font-medium leading-snug mb-3 group-hover:text-earth-accent transition-colors">
+                  {berita.judul}
+                </h3>
+                
+                <p className="text-charcoal/70 text-[0.95rem] leading-relaxed line-clamp-3 font-light">
+                  {berita.isi}
+                </p>
               </Link>
             ))}
           </div>

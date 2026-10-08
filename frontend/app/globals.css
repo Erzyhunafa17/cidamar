@@ -2,30 +2,42 @@
 
 /* ─── Design Tokens (Tailwind v4 @theme) ───────────────────────────────────── */
 @theme {
-  /* Colors */
-  --color-green-primary: #2D6A4F;
-  --color-green-secondary: #40916C;
-  --color-green-light: #74C69D;
-  --color-green-pale: #D8F3DC;
+  /* Colors - Editorial Aesthetic */
+  --color-charcoal: #1C1C1C;
+  --color-slate: #2A2A2A;
+  --color-cream: #F7F5F0;
+  --color-cream-alt: #EFECE6;
 
-  --color-amber-accent: #E9961A;
-  --color-amber-light: #FFF3CD;
+  --color-earth-accent: #8C7D70;
+  --color-earth-light: #D4CEC4;
 
-  --color-brown-dark: #4A3728;
-  --color-brown-medium: #7D5A50;
+  --color-muted-green: #5A6351;
+  --color-muted-green-light: #E5E7E1;
 
-  --color-red-alert: #C0392B;
+  --color-red-alert: #8A3A33;
+
+  /* Legacy Color Aliases */
+  --color-green-primary: var(--color-charcoal);
+  --color-green-secondary: var(--color-slate);
+  --color-green-light: var(--color-earth-light);
+  --color-green-pale: var(--color-cream-alt);
+
+  --color-amber-accent: var(--color-earth-accent);
+  --color-amber-light: var(--color-cream-alt);
+
+  --color-brown-dark: var(--color-charcoal);
+  --color-brown-medium: var(--color-slate);
 
   /* Typography */
-  --font-heading: 'Plus Jakarta Sans', sans-serif;
+  --font-heading: 'Playfair Display', serif;
   --font-body: 'Inter', sans-serif;
   --font-sans: 'Inter', sans-serif;
 }
 
 /* ─── Base Styles ───────────────────────────────────────────────────────────── */
 :root {
-  --background: #FEFAE0;
-  --foreground: #4A3728;
+  --background: #F7F5F0;
+  --foreground: #1C1C1C;
   scroll-behavior: smooth;
 }
 
@@ -34,7 +46,7 @@ body {
   color: var(--foreground);
   font-family: 'Inter', sans-serif;
   font-size: 1rem;
-  line-height: 1.7;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -44,10 +56,10 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 700;
-  line-height: 1.3;
-  color: #2D6A4F;
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--foreground);
 }
 
 /* ─── Custom Utilities ──────────────────────────────────────────────────────── */

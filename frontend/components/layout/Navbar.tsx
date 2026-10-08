@@ -3,65 +3,54 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { Menu, X, Leaf, LogIn } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 
 const navLinks = [
-  { href: '/',           label: 'Beranda'    },
   { href: '/berita',     label: 'Berita'     },
   { href: '/prestasi',   label: 'Prestasi'   },
   { href: '/agustusan',  label: 'Agustusan'  },
   { href: '/umkm',       label: 'UMKM'       },
-  { href: '/kontak',     label: 'Kontak'     },
 ];
 
 export default function Navbar() {
-  const pathname    = usePathname();
-  const [open,    setOpen]    = useState(false);
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    const handleScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // tutup menu saat navigasi
   useEffect(() => { setOpen(false); }, [pathname]);
 
   return (
     <header
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
         scrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-md border-b border-gray-100'
-          : 'bg-transparent',
+          ? 'bg-cream/95 backdrop-blur-md border-b border-black/5 py-4'
+          : 'bg-transparent py-6 md:py-10',
       )}
     >
-      <nav className="container-custom" aria-label="Navigasi Utama">
-        <div className="flex items-center justify-between h-16 md:h-20">
-
-          {/* Logo */}
+      <nav className="container-custom" aria-label="Main Navigation">
+        <div className="flex items-center justify-between">
+          
+          {/* Brand Logo */}
           <Link
             href="/"
-            className="flex items-center gap-2.5 group"
-            aria-label="Kampung Cidamar — Beranda"
+            className="flex items-baseline gap-1 group z-50 relative"
+            aria-label="Kampung Cidamar"
           >
-            <div className="w-9 h-9 rounded-xl bg-green-secondary flex items-center justify-center shadow-sm group-hover:bg-green-primary transition-colors">
-              <Leaf className="w-5 h-5 text-white" />
-            </div>
-            <div className="leading-tight">
-              <span className="font-heading font-800 text-green-primary text-base block leading-none">
-                Kampung
-              </span>
-              <span className="font-heading font-800 text-amber-accent text-base block leading-none">
-                Cidamar
-              </span>
-            </div>
+            <span className="font-heading font-semibold text-2xl md:text-3xl text-charcoal tracking-tight">
+              Cidamar.
+            </span>
           </Link>
 
-          {/* Desktop Links */}
-          <div className="hidden lg:flex items-center gap-1">
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex items-center gap-10">
             {navLinks.map(({ href, label }) => {
               const isActive = pathname === href || (href !== '/' && pathname.startsWith(href));
               return (
@@ -69,74 +58,55 @@ export default function Navbar() {
                   key={href}
                   href={href}
                   className={cn(
-                    'px-3 py-2 rounded-lg text-sm font-semibold transition-all duration-200',
+                    'text-[0.9rem] uppercase tracking-widest transition-all duration-300 relative after:content-[\'\'] after:absolute after:-bottom-1.5 after:left-0 after:w-full after:h-[1px] after:bg-charcoal after:transition-transform after:duration-300',
                     isActive
-                      ? 'text-green-secondary bg-green-pale'
-                      : 'text-brown-dark hover:text-green-secondary hover:bg-green-pale',
+                      ? 'text-charcoal after:scale-x-100 font-medium'
+                      : 'text-charcoal/60 hover:text-charcoal after:scale-x-0 hover:after:scale-x-100',
                   )}
                 >
                   {label}
                 </Link>
               );
             })}
-            
-            {/* Dropdown Publikasi */}
-            <div className="relative group">
-              <button
-                className={cn(
-                  'px-3 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-1',
-                  pathname.startsWith('/galeri') || pathname.startsWith('/arsip')
-                    ? 'text-green-secondary bg-green-pale'
-                    : 'text-brown-dark hover:text-green-secondary hover:bg-green-pale'
-                )}
-              >
-                Publikasi
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              
-              <div className="absolute top-full right-0 mt-1 w-48 bg-white border border-gray-100 shadow-xl rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 overflow-hidden">
-                <Link href="/galeri" className="block px-4 py-3 text-sm font-medium text-gray-700 hover:bg-green-50 hover:text-green-secondary">
-                  Galeri Foto
-                </Link>
-                <Link href="/arsip" className="block px-4 py-3 text-sm font-medium text-gray-700 hover:bg-green-50 hover:text-green-secondary">
-                  Arsip & Dokumen
-                </Link>
-              </div>
-            </div>
           </div>
 
-          {/* CTA + Hamburger */}
-          <div className="flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-6">
             <Link
-              href="/admin/dashboard"
-              className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-green-secondary text-white text-sm font-semibold hover:bg-green-primary transition-colors shadow-sm"
+              href="/kontak"
+              className="text-[0.9rem] uppercase tracking-widest text-charcoal hover:text-earth-accent transition-colors"
             >
-              <LogIn className="w-4 h-4" />
-              Admin
+              Kontak
             </Link>
-
-            {/* Hamburger Mobile */}
-            <button
-              onClick={() => setOpen(!open)}
-              className="lg:hidden w-11 h-11 flex items-center justify-center rounded-xl bg-green-pale text-green-primary hover:bg-green-light transition-colors"
-              aria-expanded={open}
-              aria-label="Buka menu navigasi"
-            >
-              {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
           </div>
+
+          {/* Mobile Menu Toggle */}
+          <button
+            onClick={() => setOpen(!open)}
+            className="lg:hidden z-50 w-10 h-10 flex items-center justify-end text-charcoal"
+            aria-expanded={open}
+            aria-label="Toggle Navigation"
+          >
+            {open ? <X strokeWidth={1.5} className="w-6 h-6" /> : <Menu strokeWidth={1.5} className="w-6 h-6" />}
+          </button>
         </div>
 
-        {/* Mobile Menu Drawer */}
+        {/* Mobile Fullscreen Menu */}
         <div
           className={cn(
-            'lg:hidden overflow-hidden transition-all duration-300 ease-in-out',
-            open ? 'max-h-screen opacity-100 pb-6' : 'max-h-0 opacity-0',
+            'fixed inset-0 bg-cream z-40 flex flex-col justify-center px-6 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]',
+            open ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'
           )}
         >
-          <div className="flex flex-col gap-1 pt-2 border-t border-gray-100">
+          <div className="flex flex-col gap-8 max-w-sm">
+            <Link
+              href="/"
+              className={cn(
+                'text-3xl font-heading font-medium transition-colors',
+                pathname === '/' ? 'text-charcoal' : 'text-charcoal/60'
+              )}
+            >
+              Beranda
+            </Link>
             {navLinks.map(({ href, label }) => {
               const isActive = pathname === href || (href !== '/' && pathname.startsWith(href));
               return (
@@ -144,51 +114,26 @@ export default function Navbar() {
                   key={href}
                   href={href}
                   className={cn(
-                    'px-4 py-3 rounded-xl text-base font-semibold transition-colors',
-                    isActive
-                      ? 'text-green-secondary bg-green-pale'
-                      : 'text-brown-dark hover:text-green-secondary hover:bg-green-pale',
+                    'text-3xl font-heading font-medium transition-colors',
+                    isActive ? 'text-charcoal' : 'text-charcoal/60'
                   )}
                 >
                   {label}
                 </Link>
               );
             })}
-            
-            {/* Publikasi Mobile */}
-            <div className="pt-2 pb-1 border-t border-gray-50 mt-2">
-              <span className="px-4 text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 block">
-                Publikasi
-              </span>
-              <Link
-                href="/galeri"
-                className={cn(
-                  'px-4 py-3 rounded-xl text-base font-semibold transition-colors block',
-                  pathname.startsWith('/galeri')
-                    ? 'text-green-secondary bg-green-pale'
-                    : 'text-brown-dark hover:text-green-secondary hover:bg-green-pale'
-                )}
-              >
-                Galeri Foto
-              </Link>
-              <Link
-                href="/arsip"
-                className={cn(
-                  'px-4 py-3 rounded-xl text-base font-semibold transition-colors block',
-                  pathname.startsWith('/arsip')
-                    ? 'text-green-secondary bg-green-pale'
-                    : 'text-brown-dark hover:text-green-secondary hover:bg-green-pale'
-                )}
-              >
-                Arsip & Dokumen
-              </Link>
-            </div>
+            <div className="h-px w-16 bg-charcoal/20 my-2" />
+            <Link
+              href="/kontak"
+              className="text-xl font-heading text-charcoal/60 hover:text-charcoal transition-colors"
+            >
+              Kontak
+            </Link>
             <Link
               href="/admin/dashboard"
-              className="mt-2 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-green-secondary text-white font-semibold hover:bg-green-primary transition-colors"
+              className="text-xl font-heading text-earth-accent hover:text-charcoal transition-colors"
             >
-              <LogIn className="w-4 h-4" />
-              Masuk sebagai Admin
+              Login Admin
             </Link>
           </div>
         </div>

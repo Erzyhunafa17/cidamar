@@ -9,20 +9,20 @@ interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 }
 
 const variantClasses: Record<BadgeVariant, string> = {
-  green:  'bg-green-pale  text-green-primary  border border-green-light',
-  gold:   'bg-amber-light text-amber-accent   border border-amber-200',
-  silver: 'bg-gray-100   text-gray-600       border border-gray-300',
-  bronze: 'bg-orange-50  text-orange-700     border border-orange-200',
-  red:    'bg-red-50     text-red-alert      border border-red-200',
-  gray:   'bg-gray-100   text-gray-500       border border-gray-200',
-  amber:  'bg-amber-light text-amber-700     border border-amber-200',
-  blue:   'bg-blue-50    text-blue-600       border border-blue-200',
-  white:  'bg-white      text-gray-800       border border-gray-200 shadow-sm',
+  green:  'bg-muted-green-light text-muted-green',
+  gold:   'bg-earth-light/30 text-earth-accent',
+  silver: 'bg-slate/10 text-slate',
+  bronze: 'bg-earth-accent/10 text-earth-accent',
+  red:    'bg-red-alert/10 text-red-alert',
+  gray:   'bg-slate/5 text-slate/70',
+  amber:  'bg-earth-light/50 text-earth-accent',
+  blue:   'bg-slate/5 text-slate/70',
+  white:  'bg-cream text-charcoal border border-slate/10',
 };
 
 const sizeClasses = {
-  sm: 'text-xs  px-2   py-0.5',
-  md: 'text-sm  px-2.5 py-1',
+  sm: 'text-[0.7rem] px-2.5 py-0.5 uppercase tracking-widest',
+  md: 'text-xs px-3 py-1 uppercase tracking-widest',
 };
 
 export default function Badge({
@@ -35,7 +35,7 @@ export default function Badge({
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1 rounded-full font-semibold whitespace-nowrap',
+        'inline-flex items-center gap-1.5 font-medium whitespace-nowrap',
         variantClasses[variant],
         sizeClasses[size],
         className,
@@ -47,21 +47,19 @@ export default function Badge({
   );
 }
 
-// Badge khusus tingkat prestasi
 export function BadgeTingkat({ tingkat }: { tingkat: string }) {
-  const config: Record<string, { label: string; variant: BadgeVariant; icon: string }> = {
-    nasional:  { label: 'Nasional',  variant: 'gold',   icon: '🥇' },
-    provinsi:  { label: 'Provinsi',  variant: 'gold',   icon: '🥇' },
-    kabupaten: { label: 'Kabupaten', variant: 'silver', icon: '🥈' },
-    kecamatan: { label: 'Kecamatan', variant: 'bronze', icon: '🥉' },
-    rt_rw:     { label: 'RT/RW',     variant: 'green',  icon: '🌿' },
+  const config: Record<string, { label: string; variant: BadgeVariant }> = {
+    nasional:  { label: 'Nasional',  variant: 'gold' },
+    provinsi:  { label: 'Provinsi',  variant: 'silver' },
+    kabupaten: { label: 'Kabupaten', variant: 'gray' },
+    kecamatan: { label: 'Kecamatan', variant: 'gray' },
+    rt_rw:     { label: 'Lokal',     variant: 'green' },
   };
 
-  const { label, variant, icon } = config[tingkat] ?? { label: tingkat, variant: 'gray' as BadgeVariant, icon: '📌' };
+  const { label, variant } = config[tingkat] ?? { label: tingkat, variant: 'gray' as BadgeVariant };
 
   return (
     <Badge variant={variant}>
-      <span>{icon}</span>
       <span>{label}</span>
     </Badge>
   );

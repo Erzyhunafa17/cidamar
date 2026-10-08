@@ -1,107 +1,80 @@
 import Link from 'next/link';
-import Image from 'next/image';
-import { Trophy, ChevronRight, Award, MapPin } from 'lucide-react';
-import Badge from '@/components/ui/Badge';
+import { ArrowRight } from 'lucide-react';
+import Badge, { BadgeTingkat } from '@/components/ui/Badge';
 import { fetchPrestasiList } from '@/lib/api/prestasi';
 
 export default async function PrestasiSection() {
-  const { data: prestasiData } = await fetchPrestasiList({ limit: 3 }).catch(() => ({ data: [] }));
+  const { data: prestasiData = [] } = await fetchPrestasiList({ limit: 4 }).catch(() => ({ data: [] }));
 
   return (
-    <section className="py-24 bg-white relative overflow-hidden">
-      {/* Decorative background element */}
-      <div className="absolute top-0 right-0 w-1/3 h-full bg-green-50/50 rounded-l-[120px] -z-0"></div>
-      
-      <div className="container-custom relative z-10">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
-          <div className="max-w-2xl">
-            <Badge variant="gold" className="mb-4">
-              <Trophy className="w-4 h-4 mr-1.5" />
-              Kebanggaan Cidamar
-            </Badge>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-              Prestasi & <span className="text-green-primary">Pencapaian</span>
+    <section className="py-24 md:py-32 bg-cream" aria-label="Prestasi Kampung">
+      <div className="container-custom">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 mb-16">
+          <div className="lg:col-span-5 flex flex-col justify-end">
+            <span className="block text-xs uppercase tracking-widest text-earth-accent font-semibold mb-4">
+              Pencapaian & Kebanggaan
+            </span>
+            <h2 className="text-4xl md:text-5xl font-heading font-medium leading-tight text-charcoal mb-6">
+              Jejak Prestasi<br />Kampung Cidamar.
             </h2>
-            <p className="text-lg text-gray-600 leading-relaxed">
-              Dedikasi warga Kampung Cidamar telah menghasilkan berbagai penghargaan 
-              yang mengharumkan nama desa di berbagai tingkat.
+            <Link 
+              href="/prestasi" 
+              className="group inline-flex items-center gap-3 text-charcoal font-medium hover:text-earth-accent transition-colors w-fit border-b border-charcoal/20 hover:border-earth-accent pb-1"
+            >
+              Arsip Prestasi
+              <ArrowRight className="w-4 h-4 opacity-70 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+            </Link>
+          </div>
+          <div className="lg:col-span-6 xl:col-span-5 lg:col-start-7 flex items-end">
+             <p className="text-lg text-charcoal/70 leading-relaxed font-light">
+              Dedikasi warga telah membuahkan berbagai penghargaan yang mengharumkan nama kampung dari tingkat wilayah hingga nasional.
             </p>
           </div>
-          
-          <Link 
-            href="/prestasi" 
-            className="inline-flex items-center gap-2 text-green-primary font-semibold hover:text-green-700 transition-colors group"
-          >
-            Lihat Semua Prestasi
-            <span className="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center group-hover:bg-green-100 transition-colors">
-              <ChevronRight className="w-4 h-4" />
-            </span>
-          </Link>
         </div>
 
-        {prestasiData && prestasiData.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {prestasiData.map((item: any, index: number) => (
-              <div 
-                key={item.id} 
-                className="group relative bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden"
+        {prestasiData.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12 border-t border-slate/10 pt-16">
+            {prestasiData.map((item: any) => (
+              <Link 
+                key={item.id}
+                href={`/prestasi/${item.slug}`}
+                className="group flex flex-col sm:flex-row gap-6 md:gap-8 items-start"
               >
-                {/* Image or Pattern fallback */}
-                <div className="relative h-48 w-full bg-gray-100 overflow-hidden">
+                <div className="w-full sm:w-1/3 aspect-square bg-muted-green-light shrink-0 overflow-hidden">
                   {item.foto_url ? (
-                    <Image
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
                       src={item.foto_url}
                       alt={item.nama_prestasi}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
                     />
                   ) : (
-                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-green-50 to-amber-50">
-                      <Trophy className="w-16 h-16 text-amber-200" />
+                    <div className="w-full h-full flex items-center justify-center text-charcoal/30 bg-cream-alt">
+                      <span className="text-xs uppercase tracking-widest font-semibold">Tahun {item.tahun}</span>
                     </div>
                   )}
-                  {/* Overlay gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                  
-                  {/* Badge Tingkat */}
-                  <div className="absolute bottom-4 left-4">
-                    <Badge variant={item.tingkat === 'nasional' ? 'gold' : item.tingkat === 'provinsi' ? 'silver' : 'bronze'} size="sm" className="shadow-lg">
-                      <MapPin className="w-3 h-3 mr-1" />
-                      Tingkat {item.tingkat.replace('_', '/').toUpperCase()}
-                    </Badge>
-                  </div>
                 </div>
 
-                <div className="p-6">
-                  <div className="flex items-center gap-3 text-sm text-gray-500 mb-3 font-medium">
-                    <span className="flex items-center gap-1 bg-gray-50 px-2 py-1 rounded-md">
-                      <Award className="w-4 h-4 text-amber-500" />
-                      Juara Tahun {item.tahun}
-                    </span>
+                <div className="flex flex-col flex-1 h-full justify-center">
+                  <div className="flex items-center gap-3 mb-4">
+                    <BadgeTingkat tingkat={item.tingkat} />
+                    <span className="text-xs text-charcoal/50 font-medium">Tahun {item.tahun}</span>
                   </div>
                   
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 leading-snug group-hover:text-green-primary transition-colors line-clamp-2">
+                  <h3 className="text-2xl font-heading font-medium text-charcoal mb-3 leading-snug group-hover:text-earth-accent transition-colors">
                     {item.nama_prestasi}
                   </h3>
                   
-                  <p className="text-gray-600 line-clamp-2 mb-6">
+                  <p className="text-charcoal/70 line-clamp-2 font-light text-sm leading-relaxed">
                     {item.deskripsi || `Penghargaan yang diraih di kategori ${item.kategori.replace('_', ' ')}.`}
                   </p>
-
-                  <Link 
-                    href={`/prestasi/${item.slug}`}
-                    className="inline-flex w-full items-center justify-center gap-2 px-4 py-2.5 bg-gray-50 hover:bg-green-primary hover:text-white text-green-primary font-medium rounded-xl transition-colors"
-                  >
-                    Detail Prestasi
-                  </Link>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         ) : (
-          <div className="text-center py-12 bg-gray-50 rounded-3xl border border-gray-100">
-            <Trophy className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-500 font-medium">Belum ada data prestasi yang ditambahkan.</p>
+          <div className="text-center py-20 border-y border-slate/10">
+            <p className="text-charcoal/50 font-light italic">Belum ada data prestasi yang diterbitkan.</p>
           </div>
         )}
       </div>
