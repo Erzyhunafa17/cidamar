@@ -1,93 +1,131 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
+import { useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function HeroSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const skyPopRef = useRef<HTMLDivElement>(null);
+  const grassRef = useRef<HTMLDivElement>(null);
+  const coralRef = useRef<HTMLDivElement>(null);
+  const sunshineRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    // Parallax effects
+    gsap.to(skyPopRef.current, {
+      yPercent: -40,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        scrub: true,
+        start: 'top top',
+        end: 'bottom top',
+      },
+    });
+
+    gsap.to(coralRef.current, {
+      yPercent: -20,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        scrub: true,
+        start: 'top top',
+        end: 'bottom top',
+      },
+    });
+
+    gsap.to(sunshineRef.current, {
+      yPercent: -60,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        scrub: true,
+        start: 'top top',
+        end: 'bottom top',
+      },
+    });
+
+    gsap.to(grassRef.current, {
+      yPercent: -10, // Slowest layer to give depth
+      ease: 'none',
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        scrub: true,
+        start: 'top top',
+        end: 'bottom top',
+      },
+    });
+  }, { scope: sectionRef });
+
   return (
     <section
+      ref={sectionRef}
       id="hero"
-      className="relative min-h-screen flex flex-col bg-cream overflow-hidden"
+      className="relative min-h-[90vh] flex flex-col items-center justify-center bg-cream overflow-hidden text-center section-padding"
       aria-label="Hero Kampung Cidamar"
     >
-      {/* ── Full-screen grid: text left, image right ── */}
-      <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 min-h-screen">
+      {/* Decorative Paper-cut Elements (Parallax Layers) */}
+      <div 
+        ref={sunshineRef} 
+        className="absolute top-[10%] left-[5%] w-32 h-32 md:w-64 md:h-64 rounded-full bg-[#f5e211] opacity-90 blur-[2px] z-0" 
+      />
+      <div 
+        ref={skyPopRef} 
+        className="absolute top-[30%] right-[10%] w-24 h-24 md:w-40 md:h-40 rounded-[40px] bg-[#2ba0ff] rotate-12 opacity-90 blur-[1px] z-0" 
+      />
+      <div 
+        ref={coralRef} 
+        className="absolute bottom-[20%] left-[15%] w-16 h-16 md:w-28 md:h-28 rounded-[20px] bg-[#ff705d] -rotate-12 opacity-90 blur-[1px] z-0" 
+      />
+      <div 
+        ref={grassRef} 
+        className="absolute bottom-[-10%] right-[-5%] w-[120vw] h-40 md:h-64 rounded-t-full bg-[#8ed462] opacity-20 z-0" 
+      />
 
-        {/* ── Left: editorial text column ── */}
-        <div className="relative z-10 flex flex-col justify-between pt-32 pb-12 px-6 sm:px-10 lg:px-16 xl:px-20">
-          {/* Location tag */}
-          <div className="animate-fade-in-up">
-            <p className="text-[0.75rem] uppercase tracking-[0.2em] text-charcoal/50 font-medium">
-              Jawa Barat, Indonesia
-            </p>
-          </div>
+      {/* Foreground Content */}
+      <div className="container-custom relative z-10 max-w-[1000px] flex flex-col items-center">
+        {/* Location tag */}
+        <div className="animate-fade-in-up mb-8">
+          <span className="bg-white border-2 border-charcoal px-5 py-2.5 rounded-[50px] text-[15px] font-medium text-charcoal shadow-none">
+            Jawa Barat, Indonesia
+          </span>
+        </div>
 
-          {/* Main headline — oversized, editorial */}
-          <div className="mt-auto mb-8 animate-fade-in-up" style={{ animationDelay: '100ms' }}>
-            <h1
-              className="font-heading font-medium leading-[1.05] text-charcoal"
-              style={{ fontSize: 'clamp(3rem, 7vw, 6.5rem)' }}
-            >
-              Kampung<br />
-              yang asri,<br />
-              <span className="italic text-earth-accent">berprestasi,</span><br />
-              dan berkembang<br />
-              bersama.
-            </h1>
-          </div>
+        {/* Main headline — oversized, editorial, MindMarket style */}
+        <div className="animate-fade-in-up" style={{ animationDelay: '100ms' }}>
+          <h1 className="text-display text-charcoal">
+            Kampung asri, <br />
+            berprestasi & <br />
+            berkembang.
+          </h1>
+        </div>
 
-          {/* Bottom row: tagline + CTA */}
-          <div
-            className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-8 pt-8 border-t border-charcoal/10 animate-fade-in-up"
-            style={{ animationDelay: '200ms' }}
+        {/* Bottom row: tagline + CTA */}
+        <div
+          className="mt-12 flex flex-col items-center gap-8 animate-fade-in-up"
+          style={{ animationDelay: '200ms' }}
+        >
+          <p className="text-charcoal text-[20px] max-w-2xl font-normal leading-[1.5]">
+            Menyatukan tradisi dan inovasi. Jelajahi cerita, budaya, dan kehidupan nyata warga Cidamar melalui lensa digital kami.
+          </p>
+          
+          <Link
+            href="#sekilas"
+            className="inline-flex items-center gap-3 bg-white border-2 border-charcoal text-charcoal font-medium text-[15px] h-[56px] px-6 rounded-[50px] hover:bg-cream-alt transition-colors group"
           >
-            <p className="text-charcoal/60 text-base leading-relaxed max-w-xs font-light">
-              Menyatukan tradisi dan inovasi. Cerita, budaya, dan kehidupan warga Cidamar.
-            </p>
-            <Link
-              href="#sekilas"
-              className="group shrink-0 inline-flex items-center gap-3 text-sm uppercase tracking-[0.15em] font-semibold text-charcoal border-b border-charcoal pb-1 hover:text-earth-accent hover:border-earth-accent transition-colors duration-300"
-            >
-              Jelajahi
-              <svg
-                width="16" height="16" viewBox="0 0 16 16" fill="none"
-                className="group-hover:translate-x-1 transition-transform duration-300"
-                aria-hidden="true"
-              >
-                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            Jelajahi Sekarang
+            <span className="w-8 h-8 rounded-full bg-earth-accent flex items-center justify-center text-charcoal group-hover:bg-charcoal group-hover:text-white transition-colors">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-            </Link>
-          </div>
-        </div>
-
-        {/* ── Right: full-bleed photograph ── */}
-        <div className="relative min-h-[50vw] lg:min-h-0 overflow-hidden">
-          <Image
-            src="/hero-cidamar.jpg"
-            alt="Pemandangan Kampung Cidamar — hamparan sawah, rumah tradisional, dan pegunungan"
-            fill
-            priority
-            sizes="(max-width: 1024px) 100vw, 50vw"
-            className="object-cover object-center"
-          />
-          {/* Subtle gradient overlay at the left edge for blending */}
-          <div
-            className="absolute inset-0 bg-gradient-to-r from-cream/60 via-transparent to-transparent lg:from-cream/30 pointer-events-none"
-            aria-hidden="true"
-          />
-          {/* Floating label */}
-          <div className="absolute bottom-8 left-8 right-8">
-            <span className="inline-block bg-charcoal/80 backdrop-blur-sm text-cream text-[0.7rem] uppercase tracking-widest px-3 py-1.5 font-semibold">
-              Est. 1950 — Cidamar, Jawa Barat
             </span>
-          </div>
+          </Link>
         </div>
-      </div>
-
-      {/* ── Scroll indicator ── */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 lg:hidden flex flex-col items-center gap-2 animate-bounce" aria-hidden="true">
-        <span className="text-[0.65rem] uppercase tracking-widest text-charcoal/40">Scroll</span>
-        <div className="w-px h-8 bg-charcoal/20" />
       </div>
     </section>
   );

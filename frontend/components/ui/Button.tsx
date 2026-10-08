@@ -14,11 +14,11 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantClasses: Record<ButtonVariant, string> = {
-  primary:   'bg-charcoal text-cream hover:bg-slate active:scale-[0.98] transition-transform duration-300',
-  secondary: 'bg-earth-accent text-cream hover:bg-[#7a6b5e] active:scale-[0.98] transition-transform duration-300',
-  outline:   'border-[1.5px] border-charcoal text-charcoal hover:bg-charcoal hover:text-cream active:scale-[0.98] transition-all duration-300',
-  ghost:     'text-charcoal hover:bg-black/5 active:scale-[0.98] transition-all duration-300',
-  danger:    'bg-red-alert text-cream hover:bg-[#6c2d27] active:scale-[0.98] transition-transform duration-300',
+  primary:   'bg-charcoal text-cream hover:bg-slate active:scale-[0.98] transition-all duration-300 cursor-pointer',
+  secondary: 'bg-earth-accent text-cream hover:bg-[#7a6b5e] active:scale-[0.98] transition-all duration-300 cursor-pointer',
+  outline:   'border-[1.5px] border-charcoal text-charcoal hover:bg-charcoal hover:text-cream active:scale-[0.98] transition-all duration-300 cursor-pointer',
+  ghost:     'text-charcoal hover:bg-black/5 active:scale-[0.98] transition-all duration-300 cursor-pointer',
+  danger:    'bg-red-alert text-cream hover:bg-[#6c2d27] active:scale-[0.98] transition-all duration-300 cursor-pointer',
 };
 
 const sizeClasses: Record<ButtonSize, string> = {

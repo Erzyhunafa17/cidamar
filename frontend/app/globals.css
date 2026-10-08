@@ -1,123 +1,147 @@
 @import "tailwindcss";
 
-/* ─── Design Tokens for Hart Studio (Tailwind v4 @theme) ───────────────────────────────────── */
 @theme {
-  /* Colors */
-  --color-text-primary: #ffffff;
-  --color-text-secondary: #bcbcbc;
-  --color-text-tertiary: #9ce1ff;
+  /* MindMarket Design System Colors */
+  --color-fresh-grass: #8ed462;
+  --color-cream-paper: #f5f1e4;
+  --color-ink-black: #2c2e2a;
+  --color-pure-white: #ffffff;
+  --color-sandstone: #e0dbce;
+  --color-stone-gray: #80827f;
+  --color-hairline-mist: #d5d5d4;
+  --color-pure-ink: #000000;
+  --color-sky-pop: #2ba0ff;
+  --color-coral-pop: #ff705d;
+  --color-sunshine-pop: #f5e211;
+
+  /* Aliasing old variables to new MindMarket theme to keep components working if possible */
+  --color-cream: var(--color-cream-paper);
+  --color-cream-alt: var(--color-sandstone);
+  --color-charcoal: var(--color-ink-black);
+  --color-earth-accent: var(--color-fresh-grass);
+  --color-slate: var(--color-hairline-mist);
+  --color-red-alert: var(--color-coral-pop);
   
-  --color-surface-raised: #101113;
-  --color-surface-base: #000000;
-  --color-surface-muted: #262a2b;
+  --color-primary: var(--color-fresh-grass);
+  --color-background: var(--color-cream-paper);
 
   /* Typography */
-  --font-sans: 'Open Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
-  
-  --font-size-xs: 7px;
-  --font-size-sm: 8px;
-  --font-size-md: 10px;
-  --font-size-lg: 12px;
-  --font-size-xl: 13.33px;
-  --font-size-2xl: 15px;
-  --font-size-3xl: 17.82px;
-  --font-size-4xl: 20px;
+  --font-inter: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-inter);
+
+  /* Typography — Scale */
+  --text-body-sm: 15px;
+  --text-body-lg: 18px;
+  --text-subheading: 20px;
+  --text-heading-sm: 30px;
+  --text-heading: 53px;
+  --text-heading-lg: 81px;
+  --text-display: 140px;
+  --text-display-lg: 144px;
 
   /* Spacing */
-  --spacing-1: 1px;
-  --spacing-2: 5px;
-  --spacing-3: 6px;
-  --spacing-4: 7px;
-  --spacing-5: 8px;
-  --spacing-6: 10px;
-  --spacing-7: 12px;
-  --spacing-8: 12.45px;
+  --spacing-4: 4px;
+  --spacing-20: 20px;
+  --spacing-60: 60px;
+  --spacing-136: 136px;
+  --spacing-216: 216px;
 
   /* Border Radius */
-  --radius-xs: 5px;
   --radius-sm: 10px;
-  --radius-md: 60px;
-  --radius-lg: 70px;
+  --radius-md: 20px;
+  --radius-lg: 25.5px;
+  --radius-xl: 50px;
+  --radius-2xl: 63.75px;
+  
+  /* Reset shadows (MindMarket uses flat colors without shadows for elevation) */
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+  --shadow-xl: none;
 }
 
 /* ─── Base Styles ───────────────────────────────────────────────────────────── */
 :root {
-  --background: var(--color-surface-base);
-  --foreground: var(--color-text-primary);
   scroll-behavior: smooth;
-  font-size: 10px; /* font.size.base = 10px */
+  font-size: 16px; 
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans);
-  font-size: var(--font-size-md); /* 10px */
-  font-weight: 400;
-  line-height: normal;
+  background-color: var(--color-cream-paper);
+  color: var(--color-ink-black);
+  font-family: var(--font-inter);
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-sans);
-  font-weight: 600;
-  color: var(--color-text-primary);
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-inter);
+  font-weight: 500;
+  color: var(--color-ink-black);
+  letter-spacing: -0.04em;
 }
 
 /* ─── Custom Utilities ──────────────────────────────────────────────────────── */
 .container-custom {
-  max-width: 1280px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem; /* 10px base now, so 10px */
+  padding: 0 1.25rem;
 }
 
-@media (min-width: 640px) {
-  .container-custom {
-    padding: 0 1.5rem;
-  }
+/* MindMarket Typography Classes */
+.text-display {
+  font-size: clamp(3rem, 10vw, 144px);
+  line-height: 0.95;
+  letter-spacing: -0.06em;
+  font-weight: 500;
 }
 
-@media (min-width: 1024px) {
-  .container-custom {
-    padding: 0 2rem;
-  }
+.text-heading {
+  font-size: clamp(2rem, 5vw, 53px);
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+  font-weight: 500;
 }
 
 /* Section spacing */
 .section-padding {
-  padding-top: 5rem;
-  padding-bottom: 5rem;
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding-top: 120px;
+    padding-bottom: 120px;
+  }
 }
 
 /* ─── Prose ─────────────────────────────────────────────────── */
 .prose-cidamar {
   max-width: 75ch;
-  font-size: var(--font-size-2xl); /* 15px */
-  line-height: 1.8;
-  color: var(--color-text-secondary);
+  line-height: 1.5;
+  font-size: 18px;
+  color: var(--color-ink-black);
 }
 
 .prose-cidamar h2 {
-  font-size: var(--font-size-3xl);
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  color: var(--color-text-primary);
+  font-size: 53px;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+  margin-top: 60px;
+  margin-bottom: 20px;
 }
 
 .prose-cidamar p {
-  margin-bottom: 1.25rem;
+  margin-bottom: 20px;
 }
 
 /* ─── Focus visible (Accessibility WCAG 2.2 AA) ───────────────────────── */
 :focus-visible {
-  outline: 2px solid var(--color-text-tertiary);
+  outline: 2px solid var(--color-fresh-grass);
   outline-offset: 2px;
-  border-radius: var(--radius-xs);
+  border-radius: 10px;
 }
 
 /* Skip navigation */
@@ -125,11 +149,13 @@ h6 {
   position: absolute;
   top: -100%;
   left: 0;
-  background: var(--color-surface-raised);
-  color: var(--color-text-primary);
-  padding: 1rem 2rem;
+  background: var(--color-ink-black);
+  color: var(--color-pure-white);
+  padding: 20px 40px;
   z-index: 9999;
-  font-weight: 600;
+  font-weight: 500;
+  border-bottom-right-radius: 50px;
+  transition: top 0.2s ease-in-out;
 }
 
 .skip-nav:focus {
