@@ -74,9 +74,23 @@ export default function Navbar() {
           
           <Link
             href="/kontak"
-            className="hidden sm:inline-flex items-center bg-cream-alt h-[48px] px-6 rounded-[24px] text-[15px] font-medium text-charcoal hover:bg-slate/30 transition-colors"
+            className="hidden sm:inline-flex items-center gap-3 bg-white border-2 border-charcoal h-[48px] pl-6 pr-2 rounded-[24px] text-[15px] font-medium text-charcoal hover:bg-cream-alt transition-colors"
           >
             Kontak
+            {/* MindMarket-style blue avatar face */}
+            <div className="w-[32px] h-[32px] rounded-full bg-sky-pop flex items-end justify-center overflow-hidden border-2 border-charcoal">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="translate-y-1">
+                {/* Hair tuft */}
+                <path d="M7 6c2-4 8-4 10 0" stroke="#000" strokeWidth="2" strokeLinecap="round" />
+                {/* Eyes */}
+                <circle cx="9" cy="11" r="1.5" fill="#000" />
+                <circle cx="15" cy="11" r="1.5" fill="#000" />
+                {/* Mouth */}
+                <path d="M10 16c1 1.5 3 1.5 4 0" stroke="#000" strokeWidth="2" strokeLinecap="round" />
+                {/* Red tongue */}
+                <path d="M11 16.5c.5.5 1.5.5 2 0v1.5c-.5.5-1.5.5-2 0v-1.5z" fill="#ff705d" />
+              </svg>
+            </div>
           </Link>
         </div>
 

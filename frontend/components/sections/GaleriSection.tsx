@@ -9,25 +9,25 @@ export default async function GaleriSection() {
   return (
     <section
       id="galeri"
-      className="py-24 md:py-32 bg-charcoal text-cream border-t border-slate"
+      className="py-24 md:py-32 bg-cream-alt text-charcoal rounded-[50px] mx-2 my-10 shadow-sm relative z-10"
       aria-label="Galeri Foto Kampung Cidamar"
     >
       <div className="container-custom">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
           <div>
-            <span className="block text-xs uppercase tracking-widest text-earth-accent font-semibold mb-4">
+            <span className="block text-[18px] uppercase tracking-widest text-earth-accent font-semibold mb-4">
               Jejak Visual
             </span>
-            <h2 className="text-4xl md:text-5xl font-heading font-medium text-cream">
+            <h2 className="text-[53px] md:text-[81px] leading-[1.15] font-medium tracking-tight">
               Galeri Kegiatan
             </h2>
           </div>
           <Link
             href="/galeri"
-            className="group flex items-center gap-2 text-cream font-medium hover:text-earth-accent transition-colors pb-1 border-b border-cream/20 hover:border-earth-accent"
+            className="group flex items-center gap-3 text-charcoal font-medium hover:text-earth-accent transition-colors pb-1 border-b-2 border-charcoal/20 hover:border-earth-accent text-[18px]"
           >
             Lihat Arsip Foto
-            <ArrowRight className="w-4 h-4 opacity-70 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+            <ArrowRight className="w-5 h-5 opacity-70 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
           </Link>
         </div>
 
@@ -46,10 +46,10 @@ export default async function GaleriSection() {
                 />
                 
                 <div className="absolute inset-0 bg-gradient-to-t from-charcoal/90 via-charcoal/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
-                  <span className="text-earth-accent text-[0.65rem] uppercase tracking-widest font-semibold mb-2 block">
+                  <span className="text-earth-accent text-[14px] uppercase tracking-widest font-semibold mb-2 block">
                     {foto.kategori || 'Dokumentasi'}
                   </span>
-                  <p className="text-cream font-medium text-lg leading-snug">
+                  <p className="text-cream font-medium text-[24px] leading-snug">
                     {foto.judul}
                   </p>
                 </div>
@@ -57,8 +57,8 @@ export default async function GaleriSection() {
             ))}
           </div>
         ) : (
-          <div className="border-t border-slate pt-16 text-center">
-            <p className="text-cream/40 text-sm font-light italic">Belum ada dokumentasi visual yang diunggah.</p>
+          <div className="border-t border-charcoal/10 pt-16 text-center">
+            <p className="text-charcoal/50 text-[18px] italic">Belum ada dokumentasi visual yang diunggah.</p>
           </div>
         )}
       </div>

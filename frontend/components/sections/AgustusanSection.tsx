@@ -40,29 +40,29 @@ export default function AgustusanSection() {
   return (
     <section
       id="agustusan"
-      className="py-24 md:py-32 bg-slate text-cream"
+      className="py-24 md:py-32 bg-white text-charcoal rounded-[50px] mx-2 my-10 shadow-sm relative z-10"
       aria-label="Jadwal Penampilan Agustusan"
     >
       <div className="container-custom">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8">
           
           <div className="lg:col-span-5 flex flex-col justify-center">
-            <span className="block text-xs uppercase tracking-widest text-earth-accent font-semibold mb-6">
+            <span className="block text-[18px] uppercase tracking-widest text-earth-accent font-semibold mb-6">
               Jadwal & Agenda
             </span>
-            <h2 className="text-4xl md:text-5xl font-heading font-medium leading-tight mb-8">
+            <h2 className="text-[53px] md:text-[81px] leading-[1.15] mb-8 font-medium tracking-tight">
               Perayaan<br />Agustusan
             </h2>
-            <p className="text-cream/70 text-lg leading-relaxed font-light mb-12 max-w-md">
+            <p className="text-charcoal/80 text-[20px] leading-relaxed font-normal mb-12 max-w-md">
               Momen di mana seluruh warga berkumpul, merayakan kemerdekaan dengan ragam lomba, kreasi seni, dan kebersamaan yang tulus.
             </p>
             
             <Link
               href="/agustusan"
-              className="group inline-flex items-center gap-3 text-cream font-medium hover:text-earth-accent transition-colors tracking-wide w-fit border-b border-cream/30 pb-1"
+              className="group inline-flex items-center gap-3 text-charcoal font-medium hover:text-earth-accent transition-colors text-[18px] w-fit border-b-2 border-charcoal/30 hover:border-earth-accent pb-1"
             >
               Lihat Agenda Lengkap
-              <ArrowRight className="w-4 h-4 opacity-70 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+              <ArrowRight className="w-5 h-5 opacity-70 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
             </Link>
           </div>
 
@@ -79,27 +79,27 @@ export default function AgustusanSection() {
               </div>
             )}
 
-            <div className="flex flex-col border-t border-cream/10">
+            <div className="flex flex-col border-t border-charcoal/10">
               {loading ? (
-                <div className="py-8 text-cream/50 font-light italic">Memuat agenda...</div>
+                <div className="py-8 text-charcoal/50 text-[18px] italic">Memuat agenda...</div>
               ) : !adaJadwal ? (
-                <div className="py-8 text-cream/50 font-light italic">Agenda telah selesai sepenuhnya.</div>
+                <div className="py-8 text-charcoal/50 text-[18px] italic">Agenda telah selesai sepenuhnya.</div>
               ) : (
                 displayJadwal.map((item: any) => {
                   const status = STATUS_MAP[item.status as keyof typeof STATUS_MAP] || STATUS_MAP.menunggu;
                   return (
-                    <div key={item.id} className="grid grid-cols-12 gap-4 py-8 border-b border-cream/10 items-center hover:bg-cream/[0.02] transition-colors -mx-4 px-4 rounded-sm">
+                    <div key={item.id} className="grid grid-cols-12 gap-4 py-8 border-b border-charcoal/10 items-center hover:bg-cream-alt transition-colors -mx-4 px-4 rounded-[20px]">
                       <div className="col-span-3 sm:col-span-2">
-                        <span className="text-lg font-heading text-cream/90">
+                        <span className="text-[20px] font-medium text-charcoal/90">
                           {item.waktu_tampil?.substring(0,5) || '--:--'}
                         </span>
                       </div>
                       <div className="col-span-9 sm:col-span-7">
-                        <h4 className="text-lg font-medium text-cream mb-1">{item.nama_grup}</h4>
-                        <p className="text-sm text-cream/60 font-light">{item.jenis_penampilan}</p>
+                        <h4 className="text-[24px] font-medium text-charcoal mb-1">{item.nama_grup}</h4>
+                        <p className="text-[18px] text-charcoal/70">{item.jenis_penampilan}</p>
                       </div>
                       <div className="col-span-12 sm:col-span-3 sm:text-right mt-2 sm:mt-0">
-                        <span className={`text-xs uppercase tracking-widest ${status.color}`}>
+                        <span className={`text-[15px] uppercase tracking-widest ${status.color}`}>
                           {status.label}
                         </span>
                       </div>
