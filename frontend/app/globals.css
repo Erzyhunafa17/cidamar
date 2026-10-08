@@ -1,52 +1,60 @@
 @import "tailwindcss";
 
-/* ─── Design Tokens (Tailwind v4 @theme) ───────────────────────────────────── */
+/* ─── Design Tokens for Hart Studio (Tailwind v4 @theme) ───────────────────────────────────── */
 @theme {
-  /* Colors - Editorial Aesthetic */
-  --color-charcoal: #1C1C1C;
-  --color-slate: #2A2A2A;
-  --color-cream: #F7F5F0;
-  --color-cream-alt: #EFECE6;
-
-  --color-earth-accent: #8C7D70;
-  --color-earth-light: #D4CEC4;
-
-  --color-muted-green: #5A6351;
-  --color-muted-green-light: #E5E7E1;
-
-  --color-red-alert: #8A3A33;
-
-  /* Legacy Color Aliases */
-  --color-green-primary: var(--color-charcoal);
-  --color-green-secondary: var(--color-slate);
-  --color-green-light: var(--color-earth-light);
-  --color-green-pale: var(--color-cream-alt);
-
-  --color-amber-accent: var(--color-earth-accent);
-  --color-amber-light: var(--color-cream-alt);
-
-  --color-brown-dark: var(--color-charcoal);
-  --color-brown-medium: var(--color-slate);
+  /* Colors */
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #bcbcbc;
+  --color-text-tertiary: #9ce1ff;
+  
+  --color-surface-raised: #101113;
+  --color-surface-base: #000000;
+  --color-surface-muted: #262a2b;
 
   /* Typography */
-  --font-heading: 'Playfair Display', serif;
-  --font-body: 'Inter', sans-serif;
-  --font-sans: 'Inter', sans-serif;
+  --font-sans: 'Open Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  
+  --font-size-xs: 7px;
+  --font-size-sm: 8px;
+  --font-size-md: 10px;
+  --font-size-lg: 12px;
+  --font-size-xl: 13.33px;
+  --font-size-2xl: 15px;
+  --font-size-3xl: 17.82px;
+  --font-size-4xl: 20px;
+
+  /* Spacing */
+  --spacing-1: 1px;
+  --spacing-2: 5px;
+  --spacing-3: 6px;
+  --spacing-4: 7px;
+  --spacing-5: 8px;
+  --spacing-6: 10px;
+  --spacing-7: 12px;
+  --spacing-8: 12.45px;
+
+  /* Border Radius */
+  --radius-xs: 5px;
+  --radius-sm: 10px;
+  --radius-md: 60px;
+  --radius-lg: 70px;
 }
 
 /* ─── Base Styles ───────────────────────────────────────────────────────────── */
 :root {
-  --background: #F7F5F0;
-  --foreground: #1C1C1C;
+  --background: var(--color-surface-base);
+  --foreground: var(--color-text-primary);
   scroll-behavior: smooth;
+  font-size: 10px; /* font.size.base = 10px */
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: 'Inter', sans-serif;
-  font-size: 1rem;
-  line-height: 1.6;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-md); /* 10px */
+  font-weight: 400;
+  line-height: normal;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -56,17 +64,16 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Playfair Display', serif;
-  font-weight: 500;
-  line-height: 1.2;
-  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  color: var(--color-text-primary);
 }
 
 /* ─── Custom Utilities ──────────────────────────────────────────────────────── */
 .container-custom {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 1rem; /* 10px base now, so 10px */
 }
 
 @media (min-width: 640px) {
@@ -87,81 +94,30 @@ h6 {
   padding-bottom: 5rem;
 }
 
-/* ─── Animasi ───────────────────────────────────────────────────────────────── */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes pulse-ring {
-  0% {
-    box-shadow: 0 0 0 0 rgba(192, 57, 43, 0.5);
-  }
-
-  70% {
-    box-shadow: 0 0 0 12px rgba(192, 57, 43, 0);
-  }
-
-  100% {
-    box-shadow: 0 0 0 0 rgba(192, 57, 43, 0);
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
-  }
-
-  100% {
-    background-position: 1000px 0;
-  }
-}
-
-.animate-fade-in-up {
-  animation: fadeInUp 0.5s ease-out both;
-}
-
-.animate-pulse-ring {
-  animation: pulse-ring 2s ease-in-out infinite;
-}
-
-.skeleton {
-  background: linear-gradient(90deg, #e8e8e8 25%, #f5f5f5 50%, #e8e8e8 75%);
-  background-size: 1000px 100%;
-  animation: shimmer 1.5s infinite linear;
-  border-radius: 0.5rem;
-}
-
-/* ─── Prose (konten berita) ─────────────────────────────────────────────────── */
+/* ─── Prose ─────────────────────────────────────────────────── */
 .prose-cidamar {
   max-width: 75ch;
-  font-size: 1.0625rem;
+  font-size: var(--font-size-2xl); /* 15px */
   line-height: 1.8;
-  color: #4A3728;
+  color: var(--color-text-secondary);
 }
 
 .prose-cidamar h2 {
-  font-size: 1.5rem;
+  font-size: var(--font-size-3xl);
   margin-top: 2rem;
   margin-bottom: 1rem;
+  color: var(--color-text-primary);
 }
 
 .prose-cidamar p {
   margin-bottom: 1.25rem;
 }
 
-/* ─── Focus visible (aksesibilitas) ────────────────────────────────────────── */
+/* ─── Focus visible (Accessibility WCAG 2.2 AA) ───────────────────────── */
 :focus-visible {
-  outline: 2px solid #40916C;
+  outline: 2px solid var(--color-text-tertiary);
   outline-offset: 2px;
-  border-radius: 4px;
+  border-radius: var(--radius-xs);
 }
 
 /* Skip navigation */
@@ -169,9 +125,9 @@ h6 {
   position: absolute;
   top: -100%;
   left: 0;
-  background: #2D6A4F;
-  color: white;
-  padding: 0.5rem 1rem;
+  background: var(--color-surface-raised);
+  color: var(--color-text-primary);
+  padding: 1rem 2rem;
   z-index: 9999;
   font-weight: 600;
 }

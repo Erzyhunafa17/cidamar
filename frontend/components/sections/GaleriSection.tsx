@@ -3,13 +3,7 @@ import { ArrowRight } from 'lucide-react';
 import { fetchGaleri } from '@/lib/api/galeri';
 
 export default async function GaleriSection() {
-  let galeriData = { data: [] };
-  try {
-    galeriData = await fetchGaleri();
-  } catch (error) {
-    console.error('Failed to fetch galeri:', error);
-  }
-
+  const galeriData = await fetchGaleri();
   const fotos = galeriData.data?.slice(0, 4) || [];
 
   return (

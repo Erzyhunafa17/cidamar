@@ -1,9 +1,13 @@
 import { API_BASE_URL } from '../utils/constants';
 
 export async function fetchGaleri() {
-  const res = await fetch(`${API_BASE_URL}/api/galeri`, { cache: 'no-store' });
-  if (!res.ok) throw new Error('Gagal memuat galeri');
-  return res.json();
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/galeri`, { cache: 'no-store' });
+    if (!res.ok) return { data: [] };
+    return res.json();
+  } catch {
+    return { data: [] };
+  }
 }
 
 export async function fetchArsip() {
