@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { fetchGaleri } from '@/lib/api/galeri';
+import ScrollReveal from '@/components/ui/ScrollReveal';
 
 export default async function GaleriSection() {
   const galeriData = await fetchGaleri();
@@ -13,23 +14,25 @@ export default async function GaleriSection() {
       aria-label="Galeri Foto Kampung Cidamar"
     >
       <div className="container-custom">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
-          <div>
-            <span className="block text-[18px] uppercase tracking-widest text-earth-accent font-semibold mb-4">
-              Jejak Visual
-            </span>
-            <h2 className="text-[53px] md:text-[81px] leading-[1.15] font-medium tracking-tight">
-              Galeri Kegiatan
-            </h2>
+        <ScrollReveal direction="up">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+            <div>
+              <span className="block text-[18px] uppercase tracking-widest text-earth-accent font-semibold mb-4">
+                Jejak Visual
+              </span>
+              <h2 className="text-[53px] md:text-[81px] leading-[1.15] font-medium tracking-tight">
+                Galeri Kegiatan
+              </h2>
+            </div>
+            <Link
+              href="/galeri"
+              className="group flex items-center gap-3 text-charcoal font-medium hover:text-earth-accent transition-colors pb-1 border-b-2 border-charcoal/20 hover:border-earth-accent text-[18px]"
+            >
+              Lihat Arsip Foto
+              <ArrowRight className="w-5 h-5 opacity-70 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+            </Link>
           </div>
-          <Link
-            href="/galeri"
-            className="group flex items-center gap-3 text-charcoal font-medium hover:text-earth-accent transition-colors pb-1 border-b-2 border-charcoal/20 hover:border-earth-accent text-[18px]"
-          >
-            Lihat Arsip Foto
-            <ArrowRight className="w-5 h-5 opacity-70 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
-          </Link>
-        </div>
+        </ScrollReveal>
 
         {fotos.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

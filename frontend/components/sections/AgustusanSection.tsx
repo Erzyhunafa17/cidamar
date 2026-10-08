@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { API_BASE_URL } from '@/lib/utils/constants';
+import ScrollReveal from '@/components/ui/ScrollReveal';
 
 const STATUS_MAP = {
   selesai:       { label: 'Selesai', color: 'text-charcoal/40' },
@@ -47,23 +48,24 @@ export default function AgustusanSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8">
           
           <div className="lg:col-span-5 flex flex-col justify-center">
-            <span className="block text-[18px] uppercase tracking-widest text-earth-accent font-semibold mb-6">
-              Jadwal & Agenda
-            </span>
-            <h2 className="text-[53px] md:text-[81px] leading-[1.15] mb-8 font-medium tracking-tight">
-              Perayaan<br />Agustusan
-            </h2>
-            <p className="text-charcoal/80 text-[20px] leading-relaxed font-normal mb-12 max-w-md">
-              Momen di mana seluruh warga berkumpul, merayakan kemerdekaan dengan ragam lomba, kreasi seni, dan kebersamaan yang tulus.
-            </p>
-            
-            <Link
-              href="/agustusan"
-              className="group inline-flex items-center gap-3 text-charcoal font-medium hover:text-earth-accent transition-colors text-[18px] w-fit border-b-2 border-charcoal/30 hover:border-earth-accent pb-1"
-            >
-              Lihat Agenda Lengkap
-              <ArrowRight className="w-5 h-5 opacity-70 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
-            </Link>
+            <ScrollReveal direction="left">
+              <span className="block text-[18px] uppercase tracking-widest text-earth-accent font-semibold mb-6">
+                Jadwal &amp; Agenda
+              </span>
+              <h2 className="text-[53px] md:text-[81px] leading-[1.15] mb-8 font-medium tracking-tight">
+                Perayaan<br />Agustusan
+              </h2>
+              <p className="text-charcoal/80 text-[20px] leading-relaxed font-normal mb-12 max-w-md">
+                Momen di mana seluruh warga berkumpul, merayakan kemerdekaan dengan ragam lomba, kreasi seni, dan kebersamaan yang tulus.
+              </p>
+              <Link
+                href="/agustusan"
+                className="group inline-flex items-center gap-3 text-charcoal font-medium hover:text-earth-accent transition-colors text-[18px] w-fit border-b-2 border-charcoal/30 hover:border-earth-accent pb-1"
+              >
+                Lihat Agenda Lengkap
+                <ArrowRight className="w-5 h-5 opacity-70 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+              </Link>
+            </ScrollReveal>
           </div>
 
           <div className="lg:col-span-7 xl:col-span-6 xl:col-start-7">
